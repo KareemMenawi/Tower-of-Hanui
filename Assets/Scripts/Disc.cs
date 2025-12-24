@@ -1,18 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Disc : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public int Size;
+    [SerializeField] private float _scale;
+
+    public float Scale
     {
-        
+        get => _scale;
+        set
+        {
+            _scale = value;
+            ScaleDisc();
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void ScaleDisc()
     {
-        
+        transform.localScale = new Vector3(Scale, 0.1f, Scale);
     }
 }

@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] protected int poleCount;
     [SerializeField] private int diskCount;
 
     [SerializeField] private Pole polePrefab;
     [SerializeField] private Disc discPrefab;
 
-    private Vector3 _discOffset;
+    [SerializeField] private Vector3 _discOffset;
     private Pole[] _poles;
 
     [SerializeField] private float poleSpacing;
@@ -28,13 +27,28 @@ public class GameManager : MonoBehaviour
         private set => _poles = value;
     }
 
-    private void Awake()
+    public virtual void Awake()
     {
-        Poles = new Pole[poleCount];
-        for (int i = 0; i<poleCount; i++)
+        Poles = new Pole[3];
+        for (int i = 0; i<3; i++)
         {
             Poles[i] = Instantiate(polePrefab);
-            Poles[i].transform.position = Vector3.right * i * (4 + poleSpacing);
+            Poles[i].transform.position = (4 + poleSpacing) * i * Vector3.right;
+        }
+    }
+    private void Start()
+    {
+        SpawnDiscs(); 
+    }
+
+    private void SpawnDiscs()
+    {
+        for (int i = 0; i < diskCount; i++)
+        {
+            Disc disc = Instantiate(discPrefab, Poles[0].transform);
+            disc.Scale = 4 - i * diskScaling;
+            disc.Size = i;
+            Poles[0].PutDisk(disc);
         }
     }
 
