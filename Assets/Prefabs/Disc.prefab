@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1958852971111380223}
   - component: {fileID: 7668611266329283777}
   - component: {fileID: 8080404319102477853}
+  - component: {fileID: 619435015691426391}
   m_Layer: 0
   m_Name: Disc
   m_TagString: Untagged
@@ -83,3 +84,15 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &619435015691426391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963260352387373476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17be8faa3fb90fb47afc46ed38457cae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
