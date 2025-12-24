@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private int diskCount;
+    [SerializeField] protected int diskCount;
 
     [SerializeField] private Pole polePrefab;
-    [SerializeField] private Disc discPrefab;
+    [SerializeField] protected Disc discPrefab;
 
     [SerializeField] private Vector3 _discOffset;
     private Pole[] _poles;
 
     [SerializeField] private float poleSpacing;
-    [SerializeField][Range(0.1f, 2f)] private float diskScaling;
+    [SerializeField][Range(0.1f, 2f)] protected float diskScaling;
 
     public Vector3 DiskOffset 
     {
@@ -51,5 +51,4 @@ public class GameManager : MonoBehaviour
             Poles[0].PutDisk(disc);
         }
     }
-
 }
