@@ -16,6 +16,8 @@ public class Pole : MonoBehaviour
     private Stack<Disc> _discs;
     private Renderer rend;
 
+   // public Vector3 BottomPosition => bottom.position;
+
     public SystemManager SystemManager
     {
         get => _systemManager;
@@ -45,6 +47,7 @@ public class Pole : MonoBehaviour
         Disc selectedDisk = disks.Pop();
         selectedDisk.transform.position = top.position;
         SystemManager.selectedDisk = selectedDisk;
+        SystemManager.selectedFromPoleIndex = Array.IndexOf(SystemManager.Poles, this);
     }
 
     private bool CanStack(Disc toStack)
@@ -59,14 +62,19 @@ public class Pole : MonoBehaviour
         if (!CanStack(toStack))
             return;
 
+        int fromIndex = SystemManager.selectedFromPoleIndex;
+        int toIndex = Array.IndexOf(SystemManager.Poles, this);
+
         if (disks.Count <= 0)
             toStack.transform.position = bottom.position;
         else
             toStack.transform.position = disks.Peek().transform.position + SystemManager.DiskOffset;
+
         disks.Push(toStack);
         toStack.transform.parent = transform;
-        if (SystemManager.selectedDisk != null)
-            SystemManager.selectedDisk = null;
+
+        SystemManager.RegisterMove(fromIndex, toIndex);
+        SystemManager.selectedDisk = null;
     }
 
     private void OnMouseEnter()

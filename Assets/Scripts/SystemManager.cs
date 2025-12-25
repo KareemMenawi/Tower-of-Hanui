@@ -11,6 +11,11 @@ public class SystemManager : GameManager
 
     private Coroutine autoSolveRoutine;
 
+    private Stack<Move> undoStack = new();
+    private Stack<Move> redoStack = new();
+
+    public int selectedFromPoleIndex { get; set; }
+
     public Disc selectedDisk
     {
         get => _selectedDisk;
@@ -37,13 +42,7 @@ public class SystemManager : GameManager
 
         List<Move> moves = new List<Move>();
 
-        HanoiSolver.Solve(
-            Poles[0].disks.Count,
-            0,
-            2,
-            1,
-            moves
-        );
+        HanoiSolver.Solve(Poles[0].disks.Count, 0, 2, 1, moves);
 
         autoSolveRoutine = StartCoroutine(ExecuteMoves(moves));
     }
@@ -64,16 +63,22 @@ public class SystemManager : GameManager
     public void ResetGame()
     {
         if (autoSolveRoutine != null)
+        {
             StopCoroutine(autoSolveRoutine);
+        }
 
         // Destroy ALL discs in the scene
         Disc[] allDiscs = FindObjectsOfType<Disc>();
         foreach (Disc disc in allDiscs)
+        {
             Destroy(disc.gameObject);
+        }
 
         // Clear pole stacks
         foreach (Pole pole in Poles)
+        {
             pole.disks.Clear();
+        }
 
         selectedDisk = null;
 
@@ -85,5 +90,37 @@ public class SystemManager : GameManager
             disc.Size = i;
             Poles[0].PutDisk(disc);
         }
+    }
+    public void RegisterMove(int from, int to)
+    {
+        undoStack.Push(new Move(from, to));
+        redoStack.Clear();
+    }
+
+   
+    public void Undo()
+    {
+        if (undoStack.Count == 0 || selectedDisk != null)
+            return;
+
+        Move move = undoStack.Pop();
+
+        Disc disc = Poles[move.to].disks.Pop();
+        Poles[move.from].PutDisk(disc);
+
+        redoStack.Push(move);
+    }
+
+    public void Redo()
+    {
+        if (redoStack.Count == 0 || selectedDisk != null)
+            return;
+
+        Move move = redoStack.Pop();
+
+        Disc disc = Poles[move.from].disks.Pop();
+        Poles[move.to].PutDisk(disc);
+
+        undoStack.Push(move);
     }
 }
