@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -15,7 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float poleSpacing;
     [SerializeField][Range(0.1f, 2f)] protected float diskScaling;
 
-    public Vector3 DiskOffset 
+    public Vector3 DiskOffset
     {
         get => _discOffset;
         private set => _discOffset = value;
@@ -30,7 +28,7 @@ public class GameManager : MonoBehaviour
     public virtual void Awake()
     {
         Poles = new Pole[3];
-        for (int i = 0; i<3; i++)
+        for (int i = 0; i < 3; i++)
         {
             Poles[i] = Instantiate(polePrefab);
             Poles[i].transform.position = (4 + poleSpacing) * i * Vector3.right;
@@ -38,7 +36,7 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        SpawnDiscs(); 
+        SpawnDiscs();
     }
 
     private void SpawnDiscs()

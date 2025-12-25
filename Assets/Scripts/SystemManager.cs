@@ -42,7 +42,7 @@ public class SystemManager : GameManager
 
         List<Move> moves = new List<Move>();
 
-        HanoiSolver.Solve(Poles[0].disks.Count, 0, 2, 1, moves);
+        AutoSolver.Solve(Poles[0].disks.Count, 0, 2, 1, moves);
 
         autoSolveRoutine = StartCoroutine(ExecuteMoves(moves));
     }
@@ -67,14 +67,12 @@ public class SystemManager : GameManager
             StopCoroutine(autoSolveRoutine);
         }
 
-        // Destroy ALL discs in the scene
         Disc[] allDiscs = FindObjectsOfType<Disc>();
         foreach (Disc disc in allDiscs)
         {
             Destroy(disc.gameObject);
         }
 
-        // Clear pole stacks
         foreach (Pole pole in Poles)
         {
             pole.disks.Clear();
@@ -82,7 +80,7 @@ public class SystemManager : GameManager
 
         selectedDisk = null;
 
-        // Respawn
+        // Respawn Discs
         for (int i = 0; i < diskCount; i++)
         {
             Disc disc = Instantiate(discPrefab, Poles[0].transform);

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-public static class HanoiSolver
+public static class AutoSolver
 {
     public static void Solve(int n, int from, int to, int aux, List<Move> moves)
     {

@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,8 +14,6 @@ public class Pole : MonoBehaviour
 
     private Stack<Disc> _discs;
     private Renderer rend;
-
-   // public Vector3 BottomPosition => bottom.position;
 
     public SystemManager SystemManager
     {
